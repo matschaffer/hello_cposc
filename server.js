@@ -1,8 +1,17 @@
-var http = require('http');
+var http = require('http'),
+    config = require('config'),
+    redis = require('redis'),
+    db = redis.createClient(config.redis.port, config.redis.host);
 
 http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello from cposc from node');
+  db.get('message', function (err, message) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    if (message) {
+      res.end(message);
+    } else {
+      res.end('Hello from cposc from node');
+    }
+  });
 }).listen(8000);
 
 console.log('Server running at http://*:8000/');
