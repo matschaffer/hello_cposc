@@ -15,7 +15,7 @@ http.createServer(function (req, res) {
         res.end('Hello from cposc from node');
       }
     });
-  }, 1000);
+  }, 500);
 }).listen(8000);
 
 console.log('Server running at http://*:8000/');
