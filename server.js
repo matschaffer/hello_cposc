@@ -1,4 +1,5 @@
-var http = require('http'),
+var os = require('os'),
+    http = require('http'),
     config = require('config'),
     redis = require('redis'),
     db = redis.createClient(config.redis.port, config.redis.host);
@@ -6,6 +7,7 @@ var http = require('http'),
 http.createServer(function (req, res) {
   db.get('message', function (err, message) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.write('Hostname: ' + os.hostname() + '\n');
     if (message) {
       res.end(message);
     } else {
